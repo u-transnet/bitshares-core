@@ -78,7 +78,7 @@ struct operation_process_fill_order
    template<typename T>
    void operator()( const T& )const{}
 
-   void operator()( const fill_order_operation& o )const 
+   void operator()( const fill_order_operation& o )const
    {
       //ilog( "processing ${o}", ("o",o) );
       const auto& buckets = _plugin.tracked_buckets();
@@ -91,10 +91,19 @@ struct operation_process_fill_order
       history_key hkey;
       hkey.base = o.pays.asset_id;
       hkey.quote = o.receives.asset_id;
-      if( hkey.base > hkey.quote ) 
+      if( hkey.base > hkey.quote )
          std::swap( hkey.base, hkey.quote );
       hkey.sequence = std::numeric_limits<int64_t>::min();
 
+      auto base_asset = db.find_object(o.pays.asset_id);
+      const auto& bobj = dynamic_cast<const asset_object*>(base_asset);
+      auto quote_asset = db.find_object(o.receives.asset_id);
+      const auto& qobj = dynamic_cast<const asset_object*>(quote_asset);
+      bool exclude_base_dust = bobj-> precision > 2;
+      bool exclude_quote_dust = qobj-> precision > 2;
+    //   ilog( "exclude_base_dust ${exclude_base_dust}", ("exclude_base_dust", exclude_base_dust) );
+    //   ilog( "quote_asset ${quote_asset}", ("quote_asset", qobj->precision) );
+    //   wdump( ("quote_asset")(quote_asset) );
       auto itr = history_idx.lower_bound( hkey );
 
       if( itr->key.base == hkey.base && itr->key.quote == hkey.quote )
@@ -137,10 +146,22 @@ struct operation_process_fill_order
            * each side.  We can filter the duplicates by only considering the fill operations where
            * the base > quote
            */
-          if( key.base > key.quote ) 
+          if( key.base > key.quote )
           {
              //ilog( "     skipping because base > quote" );
              continue;
+          }
+
+          if (exclude_base_dust && o.pays.amount <= 3)
+          {
+            //   ilog( "     skipping because base amount is dust" );
+              continue;
+          }
+
+          if (exclude_quote_dust && o.receives.amount <= 3)
+          {
+            //   ilog( "     skipping because quote amount is dust" );
+              continue;
           }
 
           price trade_price = o.pays / o.receives;
@@ -176,12 +197,12 @@ struct operation_process_fill_order
                   b.quote_volume += trade_price.quote.amount;
                   b.close_base = trade_price.base.amount;
                   b.close_quote = trade_price.quote.amount;
-                  if( b.high() < trade_price ) 
+                  if( b.high() < trade_price )
                   {
                       b.high_base = b.close_base;
                       b.high_quote = b.close_quote;
                   }
-                  if( b.low() > trade_price ) 
+                  if( b.low() > trade_price )
                   {
                       b.low_base = b.close_base;
                       b.low_quote = b.close_quote;
@@ -195,10 +216,10 @@ struct operation_process_fill_order
              key.open = fc::time_point_sec();
              auto itr = by_key_idx.lower_bound( key );
 
-             while( itr != by_key_idx.end() && 
-                    itr->key.base == key.base && 
-                    itr->key.quote == key.quote && 
-                    itr->key.seconds == bucket && 
+             while( itr != by_key_idx.end() &&
+                    itr->key.base == key.base &&
+                    itr->key.quote == key.quote &&
+                    itr->key.seconds == bucket &&
                     itr->key.open < cutoff )
              {
               //  elog( "    removing old bucket ${b}", ("b", *itr) );
@@ -257,7 +278,7 @@ void market_history_plugin::plugin_set_program_options(
    cli.add_options()
          ("bucket-size", boost::program_options::value<string>()->default_value("[15,60,300,3600,86400]"),
            "Track market history by grouping orders into buckets of equal size measured in seconds specified as a JSON array of numbers")
-         ("history-per-size", boost::program_options::value<uint32_t>()->default_value(1000), 
+         ("history-per-size", boost::program_options::value<uint32_t>()->default_value(1000),
            "How far back in time to track history for each bucket size, measured in the number of buckets (default: 1000)")
          ;
    cfg.add(cli);
@@ -271,7 +292,7 @@ void market_history_plugin::plugin_initialize(const boost::program_options::vari
 
    if( options.count( "bucket-size" ) )
    {
-      const std::string& buckets = options["bucket-size"].as<string>(); 
+      const std::string& buckets = options["bucket-size"].as<string>();
       my->_tracked_buckets = fc::json::from_string(buckets).as<flat_set<uint32_t>>();
    }
    if( options.count( "history-per-size" ) )
