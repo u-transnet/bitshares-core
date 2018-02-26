@@ -155,6 +155,14 @@ namespace graphene { namespace chain {
          /// The account's name. This name must be unique among all account names on the graph. May not be empty.
          string name;
 
+	/**
+	* The account id's to the linked resources. Values of this fields must be unique among all the same id's on the server.
+	* Each field value may be empty.
+	*/
+	string telegram_id;
+	string jira_id;
+	string github_id;
+
          /**
           * The owner authority represents absolute control over the account. Usually the keys in this authority will
           * be kept in cold storage, as they should not be needed very often and compromise of these keys constitutes
@@ -373,8 +381,8 @@ FC_REFLECT_DERIVED( graphene::chain::account_object,
                     (graphene::db::object),
                     (membership_expiration_date)(registrar)(referrer)(lifetime_referrer)
                     (network_fee_percentage)(lifetime_referrer_fee_percentage)(referrer_rewards_percentage)
-                    (name)(owner)(active)(options)(statistics)(whitelisting_accounts)(blacklisting_accounts)
-                    (whitelisted_accounts)(blacklisted_accounts)
+                    (name)(telegram_id)(jira_id)(github_id)(owner)(active)(options)(statistics)
+                    (whitelisting_accounts)(blacklisting_accounts)(whitelisted_accounts)(blacklisted_accounts)
                     (cashback_vb)
                     (owner_special_authority)(active_special_authority)
                     (top_n_control_flags)

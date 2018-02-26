@@ -194,6 +194,9 @@ object_id_type account_create_evaluator::do_apply( const account_create_operatio
          obj.referrer_rewards_percentage = referrer_percent;
 
          obj.name             = o.name;
+         obj.telegram_id      = o.telegram_id;
+         obj.jira_id	      = o.jira_id;
+         obj.github_id	      = o.github_id;
          obj.owner            = o.owner;
          obj.active           = o.active;
          obj.options          = o.options;
