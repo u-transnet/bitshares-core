@@ -163,9 +163,7 @@ namespace detail {
          else
          {
             // https://bitsharestalk.org/index.php/topic,23715.0.html
-            vector<string> seeds = {
-               "transnet.space:9090"    // utt
-            };
+            vector<string> seeds = {};
             for( const string& endpoint_string : seeds )
             {
                try {
