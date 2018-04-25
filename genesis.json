@@ -243,7 +243,23 @@
     }
   ],
   "initial_assets": [],
-  "initial_balances": [],
+  "initial_balances": [
+    {
+      "owner": "UTTPVxN8cGf5ZnUqfJjzeSjowosMZF9fmpKe",
+      "asset_symbol": "UTT",
+      "amount": "10000000"
+    },
+    {
+      "owner": "UTTFZfjFEkaaUZ1yV9zjeP4VP9iQ9J1nUq1j",
+      "asset_symbol": "UTT",
+      "amount": "10000000"
+    },
+    {
+      "owner": "UTT2jPthfpLUWP6kZisiuRhiYEHNTPZnXNop",
+      "asset_symbol": "UTT",
+      "amount": "10000000"
+    }
+  ],
   "initial_vesting_balances": [],
   "initial_active_witnesses": 3,
   "initial_witness_candidates": [{
