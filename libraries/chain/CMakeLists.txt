@@ -24,7 +24,7 @@ if( GRAPHENE_DISABLE_UNITY_BUILD )
    message( STATUS "Graphene database unity build disabled" )
 else( GRAPHENE_DISABLE_UNITY_BUILD )
    set( GRAPHENE_DB_FILES
-        database.cpp )
+        database.cpp include/graphene/chain/atomicswap_object.hpp)
    message( STATUS "Graphene database unity build enabled" )
 endif( GRAPHENE_DISABLE_UNITY_BUILD )
 
