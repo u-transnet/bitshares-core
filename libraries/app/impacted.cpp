@@ -211,6 +211,21 @@ struct get_impacted_account_visitor
       _impacted.insert( op.account_id );
    }
 
+   void operator()( const atomicswap_initiate_operation& op )
+   {
+     _impacted.insert( op.owner );
+   }
+
+   void operator()( const atomicswap_redeem_operation& op )
+   {
+     _impacted.insert( op.to );
+   }
+
+   void operator()( const atomicswap_refund_operation& op )
+   {
+     _impacted.insert( op.initiator );
+   }
+
 };
 
 void operation_get_impacted_accounts( const operation& op, flat_set<account_id_type>& result )

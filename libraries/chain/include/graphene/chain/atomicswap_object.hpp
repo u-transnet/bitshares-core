@@ -3,13 +3,14 @@
 #include <graphene/chain/protocol/operations.hpp>
 #include <graphene/db/generic_index.hpp>
 #include <boost/multi_index/composite_key.hpp>
+#include <fc/fixed_string.hpp>
 
 
 namespace graphene {
   namespace chain {
     class database;
 
-    using hash_index_type = string;
+    using hash_index_type = fc::fixed_string_32;
 
     enum atomicswap_contract_type : bool {
       atomicswap_contract_initiator = 0,
