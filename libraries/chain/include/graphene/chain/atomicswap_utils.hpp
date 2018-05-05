@@ -6,6 +6,7 @@
 #include <string>
 #include <fc/crypto/sha256.hpp>
 #include <fc/fixed_string.hpp>
+#include "graphene/chain/protocol/atomicswap.hpp"
 
 namespace graphene {
   namespace chain {
@@ -24,11 +25,11 @@ namespace graphene {
 
 // contract hash operations
       fc::sha256
-      get_contract_hash_obj(const account_id_type& from, const account_id_type& to, const std::string& secret_hash);
+      get_contract_hash_obj(const account_object& from, const account_object& to, const std::string& secret_hash);
       std::string
-      get_contract_hash_hex(const account_id_type& from, const account_id_type& to, const std::string& secret_hash);
+      get_contract_hash_hex(const account_object& from, const account_object& to, const std::string& secret_hash);
       hash_index_type
-      get_contract_hash(const account_id_type& from, const account_id_type& to, const std::string& secret_hash);
+      get_contract_hash(const account_object& from, const account_object& to, const std::string& secret_hash);
     }
   }
 }

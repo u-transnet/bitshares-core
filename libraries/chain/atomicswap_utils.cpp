@@ -1,4 +1,4 @@
-#include <graphene/chain/protocol/atomicswap_utils.hpp>
+#include <graphene/chain/atomicswap_utils.hpp>
 
 #include <fc/crypto/sha512.hpp>
 #include <fc/crypto/hex.hpp>
@@ -6,6 +6,7 @@
 #include <boost/endian/arithmetic.hpp>
 
 #include <sstream>
+#include <graphene/chain/account_object.hpp>
 
 namespace graphene {
   namespace chain {
@@ -92,21 +93,21 @@ namespace graphene {
       }
 
       fc::sha256
-      get_contract_hash_obj(const account_id_type& from, const account_id_type& to, const std::string& secret_hash)
+      get_contract_hash_obj(const account_object& from, const account_object& to, const std::string& secret_hash)
       {
         std::stringstream store;
-        store << std::to_string(from.instance.value) << std::to_string(to.instance.value) << secret_hash;
+        store << from.name << to.name << secret_hash;
         return fc::sha256().hash(store.str());
       }
 
       std::string
-      get_contract_hash_hex(const account_id_type& from, const account_id_type& to, const std::string& secret_hash)
+      get_contract_hash_hex(const account_object& from, const account_object& to, const std::string& secret_hash)
       {
         return get_contract_hash_obj(from, to, secret_hash).str();
       }
 
       hash_index_type
-      get_contract_hash(const account_id_type& from, const account_id_type& to, const std::string& secret_hash)
+      get_contract_hash(const account_object& from, const account_object& to, const std::string& secret_hash)
       {
         fc::sha256 encode = get_contract_hash_obj(from, to, secret_hash);
 

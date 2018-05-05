@@ -1,6 +1,6 @@
 #pragma once
 #include <graphene/chain/protocol/base.hpp>
-#include <graphene/chain/protocol/atomicswap_utils.hpp>
+#include <graphene/chain/atomicswap_utils.hpp>
 
 namespace graphene { namespace chain {
 
