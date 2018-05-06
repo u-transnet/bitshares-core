@@ -153,8 +153,11 @@ class database_api_impl : public std::enable_shared_from_this<database_api_impl>
       // Blinded balances
       vector<blinded_balance_object> get_blinded_balances( const flat_set<commitment_type>& commitments )const;
 
+      // Atomic Swap
+      optional<atomicswap_contract_object> get_atomicswap_contract( account_id_type owner, account_id_type participant, string secret_hash )const;
 
-   //private:
+
+  //private:
       template<typename T>
       void subscribe_to_item( const T& i )const
       {
@@ -2082,6 +2085,31 @@ vector<blinded_balance_object> database_api_impl::get_blinded_balances( const fl
          result.push_back( *itr );
    }
    return result;
+}
+
+//////////////////////////////////////////////////////////////////////
+//                                                                  //
+// Atomic Swap                                                 //
+//                                                                  //
+//////////////////////////////////////////////////////////////////////
+
+optional<atomicswap_contract_object> database_api::get_atomicswap_contract( account_id_type owner, account_id_type participant, string secret_hash ) const
+{
+  return my->get_atomicswap_contract( owner, participant, secret_hash );
+}
+
+optional<atomicswap_contract_object> database_api_impl::get_atomicswap_contract(account_id_type owner, account_id_type participant, string secret_hash )const
+{
+  account_object owner_account = owner(_db);
+  account_object participant_account = participant(_db);
+
+  string contract_hash = atomicswap::get_contract_hash(owner_account, participant_account, secret_hash);
+
+  const auto& idx = _db.get_index_type<atomicswap_contract_index>().indices().get<by_contract_hash>();
+  auto itr = idx.find(contract_hash);
+  if (itr != idx.end())
+    return *itr;
+  return optional<atomicswap_contract_object>();
 }
 
 //////////////////////////////////////////////////////////////////////

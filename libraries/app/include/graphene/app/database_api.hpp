@@ -40,6 +40,7 @@
 #include <graphene/chain/proposal_object.hpp>
 #include <graphene/chain/worker_object.hpp>
 #include <graphene/chain/witness_object.hpp>
+#include <graphene/chain/atomicswap_object.hpp>
 
 #include <graphene/market_history/market_history_plugin.hpp>
 
@@ -620,7 +621,14 @@ class database_api
        */
       vector<blinded_balance_object> get_blinded_balances( const flat_set<commitment_type>& commitments )const;
 
-   private:
+      //////////////////
+      // Atomic Swap //
+      /////////////////
+
+      optional<atomicswap_contract_object> get_atomicswap_contract( account_id_type owner, account_id_type participant, string secret_hash )const;
+
+
+private:
       std::shared_ptr< database_api_impl > my;
 };
 
