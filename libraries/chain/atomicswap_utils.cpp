@@ -21,7 +21,6 @@ namespace graphene {
         if (!out_sz)
         {
           static const size_t entropy_percent = (std::size_t)50;
-          FC_ASSERT(entropy_percent > 0);
           std::size_t entropy = secret.size();
           // get value in [entropy_percent, 2*entropy_percent - 1]
           entropy = entropy_percent + entropy % entropy_percent;
@@ -65,7 +64,12 @@ namespace graphene {
         return encode.str();
       }
 
-      void validate_secret(const std::string& secret_hex)
+      void validate_secret(const std::string& secret)
+      {
+        FC_ASSERT(!secret.empty(), "Empty secret.");
+      }
+
+      void validate_secret_hex(const std::string& secret_hex)
       {
         FC_ASSERT(!secret_hex.empty(), "Empty secret.");
         FC_ASSERT(secret_hex.size() < GRAPHENE_ATOMICSWAP_SECRET_MAX_LENGTH, "Secret string is too long.");

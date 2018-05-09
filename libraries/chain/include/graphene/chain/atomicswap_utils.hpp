@@ -19,7 +19,8 @@ namespace graphene {
       std::string get_secret_hash(const std::string& secret_hex);
 
 //
-      void validate_secret(const std::string& secret_hex);
+      void validate_secret(const std::string& secret);
+      void validate_secret_hex(const std::string& secret_hex);
       void validate_secret_hash(const std::string& secret_hash);
       void validate_contract_metadata(const std::string& metadata);
 

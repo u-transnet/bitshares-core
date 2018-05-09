@@ -55,8 +55,8 @@ namespace graphene { namespace chain{
         auto current_contract_itr = atc_index.indices().get<by_contract_hash>().find(contract_hash);
         FC_ASSERT( current_contract_itr == atc_index.indices().get<by_contract_hash>().end(), "Contract with same hash already exists");
 
-        FC_ASSERT(op.type != op.by_initiator
-                  && op.type != op.by_participant, "Invalid operation type.");
+        FC_ASSERT(op.type == op.by_initiator
+                  || op.type == op.by_participant, "Invalid operation type.");
 
         return void_result();
       }FC_CAPTURE_AND_RETHROW( (op) );
@@ -120,7 +120,7 @@ namespace graphene { namespace chain{
         const account_object &owner_account = op.from(d);
         const account_object &recipient_account = op.to(d);
 
-        std::string secret_hash = atomicswap::get_secret_hash(op.secret);
+        std::string secret_hash = atomicswap::get_secret_hash(atomicswap::get_secret_hex(op.secret, 0));
         const atomicswap::hash_index_type contract_hash = atomicswap::get_contract_hash(owner_account, recipient_account, secret_hash);
 
         auto& atc_index = d.get_index_type<atomicswap_contract_index>();
@@ -142,7 +142,7 @@ namespace graphene { namespace chain{
         const account_object &owner_account = op.from(d);
         const account_object &recipient_account = op.to(d);
 
-        std::string secret_hash = atomicswap::get_secret_hash(op.secret);
+        std::string secret_hash = atomicswap::get_secret_hash(atomicswap::get_secret_hex(op.secret, 0));
         const atomicswap::hash_index_type contract_hash = atomicswap::get_contract_hash(owner_account, recipient_account, secret_hash);
 
         auto& atc_index = d.get_index_type<atomicswap_contract_index>();
