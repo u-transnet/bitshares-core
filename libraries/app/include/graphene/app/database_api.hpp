@@ -739,4 +739,8 @@ FC_API(graphene::app::database_api,
 
    // Blinded balances
    (get_blinded_balances)
+
+
+   // AtomicSwaps
+   (get_atomicswap_contract)
 )

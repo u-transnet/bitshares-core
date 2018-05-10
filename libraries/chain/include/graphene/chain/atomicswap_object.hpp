@@ -12,9 +12,9 @@ namespace graphene {
 
     using hash_index_type = fc::fixed_string_32;
 
-    enum atomicswap_contract_type : bool {
-      atomicswap_contract_initiator = 0,
-      atomicswap_contract_participant,
+    enum atomicswap_contract_type {
+      atomicswap_contract_initiator = 0x0,
+      atomicswap_contract_participant = 0x1
     };
 
 
@@ -24,7 +24,7 @@ namespace graphene {
       static const uint8_t space_id = protocol_ids;
       static const uint8_t type_id = atomicswap_contract_object_type;
 
-      atomicswap_contract_type type = atomicswap_contract_initiator;
+      uint8_t type = atomicswap_contract_initiator;
 
       account_id_type owner;
 
@@ -77,4 +77,4 @@ FC_REFLECT_ENUM(graphene::chain::atomicswap_contract_type,
                 (atomicswap_contract_initiator)(atomicswap_contract_participant))
 
 FC_REFLECT_DERIVED(graphene::chain::atomicswap_contract_object, (graphene::db::object),
-                   (type) (owner)(to)(amount)(metadata)(secret_hash)(secret)(contract_hash)(created)(deadline))
+                   (type) (owner)(to)(amount)(metadata)(secret_hash)(secret)(created)(deadline))
