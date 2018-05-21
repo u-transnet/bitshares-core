@@ -1,9 +1,9 @@
 [![English](https://thumb.ibb.co/jDrVkd/gb.png)](README.md) [![Russian](https://thumb.ibb.co/cjYMrJ/ru.png)](README.ru.md)
 
-# transnet-core
+# trasnet-core
 Transnet Core is the Transnet blockchain implementation and command-line interface.
 
-## Installation
+## Установка
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras condimentum dictum tellus eget gravida. Pellentesque venenatis ligula tortor, eget finibus lacus sollicitudin vitae. Nam finibus magna ut rutrum rutrum. Nullam tortor velit, mollis vel augue et, dapibus congue urna. Integer diam sapien, sollicitudin sit amet tincidunt sit amet
 
 **NOTE:** The official Transnet git repository location, default branch, and submodule remotes were recently changed. Existing
@@ -16,8 +16,7 @@ repositories can be updated with the following steps:
     git submodule sync --recursive
     git submodule update --init --recursive
 
-## Getting started
-
+## Руководство по началу работы
 Build instructions and additional documentation are available in the
 [wiki](https://github.com/bitshares/bitshares-core/wiki) of Bitshares.
 
@@ -140,13 +139,13 @@ it is fairly simple to write API methods to expose database methods.
 
 More information you can find in Bitshares [original repository](https://github.com/bitshares/bitshares-core).
 
-## Related projects
+## Связанные проекты
 - [utransnet-ui](https://github.com/u-transnet/utransnet-ui)
 - [python-utransnet](https://github.com/u-transnet/python-utransnet)
 
-## Contributing
-We'd love to have your helping hand on our project! See [CONTRIBUTING.md](CONTRIBUTING.md) for more information on what we're looking for and how to get started.
+## Сотрудничество
+Мы будем рады вашей помощи в развитии проекта! Откройте [CONTRIBUTING.ru.md](CONTRIBUTING.ru.md) для того, чтобы узнать чем Вы можете поможете помочь проекту и как присоединиться
 
-## License
-Project is under the MIT license. See [LICENSE](LICENSE) for more information.
+## Лицензия
+Проект использует MIT лицензию. Откройте [LICENSE](LICENSE) для подробностей
 
